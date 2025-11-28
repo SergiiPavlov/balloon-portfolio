@@ -184,12 +184,12 @@ export default function CollectedSkills({
                 <p className="text-xs sm:text-sm text-slate-200">
                   {selected.modalDescription[locale]}
                 </p>
-                {selected.techStack && selected.techStack.length > 0 && (
+                {selected.stack && selected.stack.length > 0 && (
                   <p className="text-[11px] sm:text-xs text-slate-400">
                     <span className="font-semibold text-slate-300">
                       {t.techStack}:
                     </span>{' '}
-                    {selected.techStack.join(', ')}
+                    {selected.stack.join(', ')}
                   </p>
                 )}
               </div>
