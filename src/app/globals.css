@@ -10,6 +10,7 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-montserrat);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,4 +24,40 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+
+/* Custom cursor for balloon aim area */
+.balloon-aim-area {
+  cursor: url('/cursors/reticle.svg') 16 16, crosshair;
+}
+
+.balloon-aim-area button,
+.balloon-aim-area button:hover {
+  cursor: inherit;
+}
+
+
+html {
+  overflow-y: scroll;
+}
+
+/* Decorative font for celebration banner */
+.banner-display {
+  font-family: var(--font-montserrat), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* Optional: smooth scrolling for internal links */
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  a[href],
+  button,
+  [role='button'],
+  [type='button'],
+  [type='submit'] {
+    cursor: pointer;
+  }
 }
