@@ -57,12 +57,11 @@ export default function BalloonField({
         'SPA and landing pages with React/Next.js',
         'Admin panels and dashboards',
         'AI-powered assistants (chat & content search)',
-       
       ],
       downloadCv: 'Download CV',
       downloadCvAria: 'Download my CV as PDF',
     },
-uk: {
+    uk: {
       title: 'Поле кульок зі скілами',
       subtitle:
         'Лопайте кульки, щоб відкривати картки скілів з реальними проєктами нижче.',
@@ -77,12 +76,12 @@ uk: {
         'SPA та лендінги на React/Next.js',
         'Адмін-панелі та дашборди',
         'AI-асистенти (чат та пошук контенту)',
-        
+       
       ],
       downloadCv: 'Завантажити CV',
       downloadCvAria: 'Завантажити моє CV у форматі PDF',
     },
-}[locale];
+  }[locale];
 
   const [balloons, setBalloons] = useState<BalloonInstance[]>([]);
 
