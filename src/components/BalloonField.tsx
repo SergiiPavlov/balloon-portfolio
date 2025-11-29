@@ -288,7 +288,7 @@ export default function BalloonField({
       {/* Фиксированное по высоте поле для анимации, чтобы не прыгать по высоте */}
       <div
         className={[
-          'relative h-64 sm:h-72 md:h-80 overflow-hidden rounded-2xl bg-slate-950/70 border border-slate-800 balloon-aim-area',
+          'relative h-72 sm:h-80 md:h-80 overflow-hidden rounded-2xl bg-slate-950/70 border border-slate-800 balloon-aim-area',
           !celebrationActive ? 'balloon-aim-area--aim' : '',
           celebrationActive
             ? 'ring-2 ring-emerald-400/70 shadow-[0_0_40px_rgba(34,197,94,0.5)]'
@@ -329,7 +329,7 @@ export default function BalloonField({
                     </p>
                   </div>
                   {/* Нижний бейдж: мини-блок «About me» */}
-                  <div className="banner-display rounded-3xl border border-emerald-500/50 bg-emerald-900/40 px-4 sm:px-6 py-2 sm:py-3 shadow-lg backdrop-blur-sm text-left">
+                  <div className="banner-display banner-display--pulse max-w-[280px] sm:max-w-md mx-auto rounded-3xl border border-emerald-400/70 bg-slate-950/80 px-4 sm:px-6 py-2 sm:py-3 shadow-lg backdrop-blur-sm text-left">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                       <div className="text-[10px] sm:text-xs md:text-sm text-emerald-100/90">
                         <p>{t.celebrationAbout1}</p>
@@ -337,16 +337,26 @@ export default function BalloonField({
                           {t.celebrationAbout2}
                         </p>
 
-                        <div className="mt-1.5 sm:mt-2">
+                        <motion.div
+                          className="mt-1.5 sm:mt-2"
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ delay: 0.25, duration: 0.35, ease: 'easeOut' }}
+                        >
                           <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-emerald-100">
                             {t.whatIDoTitle}
                           </p>
                           <ul className="mt-0.5 sm:mt-1 space-y-0.5 text-[9px] sm:text-[10px] md:text-xs text-emerald-100/90 list-disc list-inside">
                             {t.whatIDoItems.map((item) => (
-                              <li key={item}>{item}</li>
+                              <li
+                                key={item}
+                                className="pl-1 pr-1 py-0.5 rounded-md transition-colors duration-150 hover:bg-emerald-900/60 hover:border-l hover:border-emerald-400/70"
+                              >
+                                {item}
+                              </li>
                             ))}
                           </ul>
-                        </div>
+                        </motion.div>
                       </div>
 
                     </div>
@@ -354,62 +364,6 @@ export default function BalloonField({
                 </div>
               </motion.div>
 
-              {/* Подпись + стрелка: падает и «сидит» у нижнего края поля, указывая на карточки */}
-              <motion.div
-                className="absolute bottom-2 left-1/2 z-30 -translate-x-1/2 flex flex-col items-center gap-1"
-                initial={{ y: 40, opacity: 0, scale: 0.9 }}
-                animate={{
-                  y: 0,
-                  opacity: 1,
-                  scale: [1, 1.04, 0.96, 1],
-                }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{
-                  duration: 0.8,
-                  ease: 'easeOut',
-                }}
-              >
-                <a
-                  href="/Sergii_Pavlov_Fullstack_Developer.pdf"
-                  download
-                  className="mb-1 inline-flex items-center justify-center rounded-full border border-emerald-300 bg-emerald-200/90 px-3 py-1.5 text-[10px] sm:text-xs font-semibold uppercase tracking-wide text-slate-950 hover:bg-emerald-300 hover:border-emerald-200 transition"
-                  aria-label={t.downloadCvAria}
-                >
-                  {t.downloadCv}
-                </a>
-                <span className="banner-display text-[10px] sm:text-xs text-slate-100/90">
-                  {t.lookDown}
-                </span>
-                <motion.svg
-                  className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-300 drop-shadow"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  animate={{
-                    y: [0, 4, 0],
-                  }}
-                  transition={{
-                    duration: 1.2,
-                    repeat: Infinity,
-                    ease: 'easeInOut',
-                  }}
-                >
-                  <path
-                    d="M12 5v14"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M5 12l7 7 7-7"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </motion.svg>
-              </motion.div>
             </>
           )}
         </AnimatePresence>
@@ -486,6 +440,57 @@ export default function BalloonField({
           </div>
         )}
       </div>
+
+      {celebrationActive && (
+        <motion.div
+          className="mt-3 flex flex-col items-center gap-1"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.35, ease: 'easeOut' }}
+        >
+          <a
+            href="/Sergii_Pavlov_Fullstack_Developer.pdf"
+            download
+            className="mb-1 inline-flex items-center justify-center rounded-full border border-emerald-300 bg-emerald-200/90 px-3 py-1.5 text-[10px] sm:text-xs font-semibold uppercase tracking-wide text-slate-950 hover:bg-emerald-300 hover:border-emerald-200 transition"
+            aria-label={t.downloadCvAria}
+          >
+            {t.downloadCv}
+          </a>
+          <span className="banner-display text-[10px] sm:text-xs text-slate-100/90">
+            {t.lookDown}
+          </span>
+          <motion.svg
+            className="mt-0.5 w-4 h-4 sm:w-5 sm:h-5 text-emerald-300 drop-shadow"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            animate={{
+              y: [0, 4, 0],
+            }}
+            transition={{
+              duration: 1.2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          >
+            <path
+              d="M12 5v14"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M5 12l7 7 7-7"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </motion.svg>
+        </motion.div>
+      )}
+
 
     </section>
   );
