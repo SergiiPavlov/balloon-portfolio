@@ -51,7 +51,8 @@ export default function BalloonField({
       lookDown: 'See your unlocked projects',
       celebrationAbout1:
         'I build interactive, AI-assisted front-ends and full-stack web apps.',
-      
+      celebrationAbout2: '',
+
       whatIDoTitle: 'What I do',
       whatIDoItems: [
         'SPA and landing pages with React/Next.js',
@@ -70,18 +71,20 @@ export default function BalloonField({
       lookDown: 'Подивіться відкриті проєкти',
       celebrationAbout1:
         'Я створюю інтерактивні, AI-підсилені інтерфейси та full‑stack вебдодатки.',
-     
+      celebrationAbout2: '',
+
       whatIDoTitle: 'Чим я займаюсь',
       whatIDoItems: [
         'SPA та лендінги на React/Next.js',
         'Адмін-панелі та дашборди',
         'AI-асистенти (чат та пошук контенту)',
-       
+        
       ],
-      downloadCv: 'Завантажити CV',
-      downloadCvAria: 'Завантажити моє CV у форматі PDF',
+      downloadCv: 'Завантажити резюме',
+      downloadCvAria: 'Завантажити моє резюме у форматі PDF',
     },
   }[locale];
+
 
   const [balloons, setBalloons] = useState<BalloonInstance[]>([]);
 
@@ -92,6 +95,8 @@ export default function BalloonField({
   // Аудио: фоновая музыка и одиночный звук празднования
   const bgAudioRef = useRef<HTMLAudioElement | null>(null);
   const celebrationPlayedRef = useRef(false);
+  const prevUnlockedRef = useRef<number | null>(null);
+
 
   const spawnBalloon = () => {
     setBalloons((prev) => {
@@ -176,52 +181,68 @@ export default function BalloonField({
     };
   }, [soundEnabled]);
 
-  // Конфетти с помощью canvas-confetti при достижении 100% прогресса + звук празднования
+  // Конфетти при достижении 100% прогресса — только в момент, когда открыли последний скилл
   useEffect(() => {
-    if (!celebrationActive) {
-      celebrationPlayedRef.current = false;
+    if (totalSkills === 0) {
+      prevUnlockedRef.current = unlockedCount;
       return;
     }
 
-    const duration = 2000;
-    const end = Date.now() + duration;
-
-    const frame = () => {
-      // левый залп
-      confetti({
-        particleCount: 18,
-        angle: 60,
-        spread: 60,
-        origin: { x: 0.1, y: 0.1 },
-      });
-      // правый залп
-      confetti({
-        particleCount: 18,
-        angle: 120,
-        spread: 60,
-        origin: { x: 0.9, y: 0.1 },
-      });
-      // центральный веер
-      confetti({
-        particleCount: 20,
-        spread: 80,
-        origin: { x: 0.5, y: 0.1 },
-      });
-
-      if (Date.now() < end) {
-        requestAnimationFrame(frame);
-      }
-    };
-
-    frame();
-
-    if (soundEnabled && !celebrationPlayedRef.current) {
-      const applause = new Audio('/sounds/celebration.mp3');
-      applause.volume = 0.7;
-      applause.play().catch(() => {});
-      celebrationPlayedRef.current = true;
+    // Инициализация на первом рендере, чтобы не стрелять конфетти при монтировании
+    if (prevUnlockedRef.current === null) {
+      prevUnlockedRef.current = unlockedCount;
+      return;
     }
-  }, [celebrationActive, soundEnabled]);
+
+    const prev = prevUnlockedRef.current;
+
+    if (prev === unlockedCount) {
+      return;
+    }
+
+    prevUnlockedRef.current = unlockedCount;
+
+    // Стреляем, только когда раньше были не все скиллы, а теперь стали все
+    if (prev < totalSkills && unlockedCount === totalSkills) {
+      const duration = 2000;
+      const end = Date.now() + duration;
+
+      const frame = () => {
+        // левый залп
+        confetti({
+          particleCount: 18,
+          angle: 60,
+          spread: 60,
+          origin: { x: 0.1, y: 0.1 },
+        });
+        // правый залп
+        confetti({
+          particleCount: 18,
+          angle: 120,
+          spread: 60,
+          origin: { x: 0.9, y: 0.1 },
+        });
+        // центральный веер
+        confetti({
+          particleCount: 20,
+          spread: 80,
+          origin: { x: 0.5, y: 0.1 },
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      };
+
+      frame();
+
+      if (soundEnabled) {
+        const applause = new Audio('/sounds/celebration.mp3');
+        applause.volume = 0.7;
+        applause.play().catch(() => {});
+      }
+    }
+  }, [unlockedCount, totalSkills, soundEnabled]);
 
   const handlePop = (balloonId: string, skillId: string) => {
     // Отмечаем скилл как открытый
@@ -268,6 +289,7 @@ export default function BalloonField({
       <div
         className={[
           'relative h-64 sm:h-72 md:h-80 overflow-hidden rounded-2xl bg-slate-950/70 border border-slate-800 balloon-aim-area',
+          !celebrationActive ? 'balloon-aim-area--aim' : '',
           celebrationActive
             ? 'ring-2 ring-emerald-400/70 shadow-[0_0_40px_rgba(34,197,94,0.5)]'
             : '',
@@ -334,7 +356,7 @@ export default function BalloonField({
 
               {/* Подпись + стрелка: падает и «сидит» у нижнего края поля, указывая на карточки */}
               <motion.div
-                className="absolute bottom-2 left-1/2 z-30 -translate-x-1/2 pointer-events-none flex flex-col items-center gap-1"
+                className="absolute bottom-2 left-1/2 z-30 -translate-x-1/2 flex flex-col items-center gap-1"
                 initial={{ y: 40, opacity: 0, scale: 0.9 }}
                 animate={{
                   y: 0,

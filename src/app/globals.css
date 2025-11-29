@@ -28,13 +28,9 @@ body {
 
 
 /* Custom cursor for balloon aim area */
-.balloon-aim-area {
-  cursor: url('/cursors/reticle.svg') 16 16, crosshair;
-}
-
-.balloon-aim-area button,
-.balloon-aim-area button:hover {
-  cursor: inherit;
+.balloon-aim-area--aim,
+.balloon-aim-area--aim * {
+  cursor: url('/cursors/reticle.svg') 16 16, crosshair !important;
 }
 
 
