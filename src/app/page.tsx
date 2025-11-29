@@ -22,7 +22,8 @@ export default function HomePage() {
   const [collectedSkills, setCollectedSkills] = useState<SkillProject[]>([]);
 
   // Звук (музыка + эффекты)
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(false);
+  const [soundModalOpen, setSoundModalOpen] = useState(true);
 
   // Глобальный звук "клика" для UI (как лёгкий щелчок айфона)
   const uiClickRef = useRef<HTMLAudioElement | null>(null);
@@ -96,10 +97,20 @@ export default function HomePage() {
 
   const t = {
     en: {
-      reset: 'Reset progress',
+reset: 'Reset progress',
+soundTitle: 'Portfolio soundtrack',
+soundBody:
+  'This interactive portfolio uses soft background music and click sounds. How would you like to experience it?',
+soundEnable: 'Play with sound',
+soundMute: 'Continue without sound',
     },
     uk: {
-      reset: 'Скинути прогрес',
+reset: 'Скинути прогрес',
+soundTitle: 'Звук у портфоліо',
+soundBody:
+  'Це інтерактивне портфоліо використовує легку фонову музику та звуки кліків. Як вам зручніше його переглядати?',
+soundEnable: 'Перегляд зі звуком',
+soundMute: 'Перегляд без звуку',
     },
   }[locale];
 
@@ -113,6 +124,42 @@ export default function HomePage() {
       />
 
       <main className="flex-1 flex flex-col gap-6 px-4 sm:px-6 lg:px-8 py-6 max-w-5xl w-full mx-auto">
+
+{mode === 'interactive' && soundModalOpen && (
+  <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm px-4">
+    <div className="max-w-md w-full rounded-3xl border border-slate-700 bg-slate-900 px-5 py-4 shadow-xl">
+      <h2 className="text-base sm:text-lg font-semibold text-slate-50">
+        {t.soundTitle}
+      </h2>
+      <p className="mt-2 text-xs sm:text-sm text-slate-300">
+        {t.soundBody}
+      </p>
+      <div className="mt-4 flex flex-col sm:flex-row gap-2 sm:justify-end">
+        <button
+          type="button"
+          onClick={() => {
+            setSoundEnabled(true);
+            setSoundModalOpen(false);
+          }}
+          className="inline-flex items-center justify-center rounded-full border border-emerald-400 bg-emerald-300/90 px-3 py-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-slate-950 hover:bg-emerald-300 hover:border-emerald-200 transition"
+        >
+          {t.soundEnable}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setSoundEnabled(false);
+            setSoundModalOpen(false);
+          }}
+          className="inline-flex items-center justify-center rounded-full border border-slate-600 bg-slate-800/90 px-3 py-1.5 text-[11px] sm:text-xs font-semibold uppercase tracking-wide text-slate-100 hover:bg-slate-700 hover:border-slate-500 transition"
+        >
+          {t.soundMute}
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
         {mode === 'interactive' ? (
           <>
             <BalloonField
