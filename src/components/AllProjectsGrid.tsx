@@ -54,8 +54,8 @@ export default function AllProjectsGrid({ locale }: AllProjectsGridProps) {
         'AI-асистенти (чат та пошук контенту)',
         'Веб-проєкти для волонтерства та комʼюніті',
       ],
-      downloadCv: 'Завантажити CV',
-      downloadCvAria: 'Завантажити моє CV у форматі PDF',
+      downloadCv: 'Завантажити резюме',
+      downloadCvAria: 'Завантажити моє резюме у форматі PDF',
     },
   }[locale];
 
