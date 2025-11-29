@@ -51,14 +51,13 @@ export default function BalloonField({
       lookDown: 'See your unlocked projects',
       celebrationAbout1:
         'I build interactive, AI-assisted front-ends and full-stack web apps.',
-      celebrationAbout2:
-        'Scroll down to explore real projects behind each unlocked skill.',
+      
       whatIDoTitle: 'What I do',
       whatIDoItems: [
         'SPA and landing pages with React/Next.js',
         'Admin panels and dashboards',
         'AI-powered assistants (chat & content search)',
-        'Web projects for volunteers and communities',
+       
       ],
       downloadCv: 'Download CV',
       downloadCvAria: 'Download my CV as PDF',
@@ -72,14 +71,13 @@ uk: {
       lookDown: 'Подивіться відкриті проєкти',
       celebrationAbout1:
         'Я створюю інтерактивні, AI-підсилені інтерфейси та full‑stack вебдодатки.',
-      celebrationAbout2:
-        'Гортайте вниз, щоб побачити реальні проєкти за кожним відкритим скілом.',
+     
       whatIDoTitle: 'Чим я займаюсь',
       whatIDoItems: [
         'SPA та лендінги на React/Next.js',
         'Адмін-панелі та дашборди',
         'AI-асистенти (чат та пошук контенту)',
-        'Веб-проєкти для волонтерства та комʼюніті',
+        
       ],
       downloadCv: 'Завантажити CV',
       downloadCvAria: 'Завантажити моє CV у форматі PDF',
@@ -310,13 +308,27 @@ uk: {
                     </p>
                   </div>
                   {/* Нижний бейдж: мини-блок «About me» */}
-                  <div className="banner-display rounded-full border border-emerald-500/50 bg-emerald-900/40 px-4 sm:px-6 py-1.5 sm:py-2 shadow-lg backdrop-blur-sm text-center">
-                    <p className="text-[10px] sm:text-xs md:text-sm text-emerald-100/90">
-                      {t.celebrationAbout1}
-                    </p>
-                    <p className="mt-0.5 text-[9px] sm:text-[10px] md:text-xs text-emerald-100/80">
-                      {t.celebrationAbout2}
-                    </p>
+                  <div className="banner-display rounded-3xl border border-emerald-500/50 bg-emerald-900/40 px-4 sm:px-6 py-2 sm:py-3 shadow-lg backdrop-blur-sm text-left">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                      <div className="text-[10px] sm:text-xs md:text-sm text-emerald-100/90">
+                        <p>{t.celebrationAbout1}</p>
+                        <p className="mt-0.5 text-[9px] sm:text-[10px] md:text-xs text-emerald-100/80">
+                          {t.celebrationAbout2}
+                        </p>
+
+                        <div className="mt-1.5 sm:mt-2">
+                          <p className="text-[10px] sm:text-xs md:text-sm font-semibold text-emerald-100">
+                            {t.whatIDoTitle}
+                          </p>
+                          <ul className="mt-0.5 sm:mt-1 space-y-0.5 text-[9px] sm:text-[10px] md:text-xs text-emerald-100/90 list-disc list-inside">
+                            {t.whatIDoItems.map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -336,6 +348,14 @@ uk: {
                   ease: 'easeOut',
                 }}
               >
+                <a
+                  href="/Sergii_Pavlov_Fullstack_Developer.pdf"
+                  download
+                  className="mb-1 inline-flex items-center justify-center rounded-full border border-emerald-300 bg-emerald-200/90 px-3 py-1.5 text-[10px] sm:text-xs font-semibold uppercase tracking-wide text-slate-950 hover:bg-emerald-300 hover:border-emerald-200 transition"
+                  aria-label={t.downloadCvAria}
+                >
+                  {t.downloadCv}
+                </a>
                 <span className="banner-display text-[10px] sm:text-xs text-slate-100/90">
                   {t.lookDown}
                 </span>
@@ -444,32 +464,6 @@ uk: {
             <p className="text-[11px] sm:text-xs text-slate-500">{t.hint}</p>
           </div>
         )}
-      </div>
-
-      {/* What I do + Download CV (same as classic view) */}
-      <div className="mt-3 rounded-3xl border border-slate-800 bg-slate-900/80 px-4 py-3 sm:px-5 sm:py-4 md:px-6 md:py-4">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div>
-            <h3 className="text-sm sm:text-base font-semibold text-slate-50">
-              {t.whatIDoTitle}
-            </h3>
-            <ul className="mt-1 space-y-0.5 text-xs sm:text-sm text-slate-300 list-disc list-inside">
-              {t.whatIDoItems.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="sm:self-start">
-            <a
-              href="/Sergii_Pavlov_Fullstack_Developer.pdf"
-              download
-              className="inline-flex items-center justify-center rounded-full border border-emerald-400 bg-emerald-400/90 px-3.5 py-1.5 text-xs sm:text-sm font-semibold text-slate-950 hover:bg-emerald-300 hover:border-emerald-300 transition"
-              aria-label={t.downloadCvAria}
-            >
-              {t.downloadCv}
-            </a>
-          </div>
-        </div>
       </div>
 
     </section>
