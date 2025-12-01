@@ -288,7 +288,7 @@ export default function BalloonField({
       {/* Фиксированное по высоте поле для анимации, чтобы не прыгать по высоте */}
       <div
         className={[
-          'relative h-72 sm:h-80 md:h-80 overflow-hidden rounded-2xl bg-slate-950/70 border border-slate-800 balloon-aim-area',
+          'relative h-88 sm:h-80 md:h-80 overflow-hidden rounded-2xl bg-slate-950/70 border border-slate-800 balloon-aim-area',
           !celebrationActive ? 'balloon-aim-area--aim' : '',
           celebrationActive
             ? 'ring-2 ring-emerald-400/70 shadow-[0_0_40px_rgba(34,197,94,0.5)]'
@@ -329,7 +329,7 @@ export default function BalloonField({
                     </p>
                   </div>
                   {/* Нижний бейдж: мини-блок «About me» */}
-                  <div className="banner-display banner-display--pulse max-w-[280px] sm:max-w-md mx-auto rounded-3xl border border-emerald-400/70 bg-slate-950/80 px-4 sm:px-6 py-2 sm:py-3 shadow-lg backdrop-blur-sm text-left">
+                  <div className="banner-display banner-display--pulse w-[96%] max-w-[520px] sm:max-w-2xl mx-auto rounded-3xl border border-emerald-400/70 bg-slate-950/95 px-4 sm:px-6 py-2 sm:py-3 shadow-lg backdrop-blur-sm text-left">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                       <div className="text-[10px] sm:text-xs md:text-sm text-emerald-100/90">
                         <p>{t.celebrationAbout1}</p>
