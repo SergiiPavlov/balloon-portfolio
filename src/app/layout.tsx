@@ -42,6 +42,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  other: {
+    freelancehunt: "7c0e8a709bddba4",
+  },
 };
 
 export default function RootLayout({
